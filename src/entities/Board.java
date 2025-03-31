@@ -6,6 +6,11 @@ import java.util.Optional;
 
 public class Board {
     private List<List<Space>> squares;
+    private BoardOperations boardOperations = new BoardOperations();
+
+    public Board() {
+        boardOperations.setBoard(this);
+    }
 
     public Board(List<List<Space>> lines) {
         this.squares = lines;
@@ -37,27 +42,24 @@ public class Board {
         }
     }
 
-    public void addNumber(int number, Integer intendedLine, Integer intendedColumn) {
-        List<List<Space>> squaresInLine = getSquaresInLine(intendedLine);
-        List<Space> squareOfOccurrence = findSquareOfCoordinates(intendedLine, intendedColumn, squaresInLine);
-        List<Space> allNumbersInSpecifiedLine = getAllNumbersInSpecifiedLine(intendedLine, intendedColumn, squaresInLine);
-        List<List<Space>> squaresInColumn = getSquaresInColumn(intendedColumn);
-        List<Space> allNumbersInSpecifiedColumn = getAllNumbersInSpecifiedColumn(intendedColumn, squaresInColumn);
-        Space spaceInOccurrence = allNumbersInSpecifiedLine.get(intendedColumn - 1);
+    public void removeNumber(int number, Integer intendedLine, Integer intendedColumn) {
 
-        if (spaceInOccurrence.isFixed()) {
+    }
+
+    public void addNumber(int number, Integer intendedLine, Integer intendedColumn) {
+        boardOperations.setData(number, intendedLine, intendedColumn);
+
+        if (boardOperations.getSpaceOfOcurrence().isFixed()) {
             System.out.println("You can't add a number in a fixed coordinate");
             return;
         } else {
-            if (!checkIfNumberIsNotPresent(number, List.of(squareOfOccurrence, allNumbersInSpecifiedLine, allNumbersInSpecifiedColumn))) {
+            if (!checkIfNumberIsNotPresent(number, List.of(boardOperations.squareOfOccurrence, boardOperations.allNumbersInSpecifiedLine, boardOperations.allNumbersInSpecifiedColumn))) {
                 System.out.println("Invalid number, try again.");
                 return;
             }
-            allNumbersInSpecifiedLine.get(intendedColumn - 1).setActual(number);
+            boardOperations.allNumbersInSpecifiedLine.get(intendedColumn - 1).setActual(number);
             System.out.println("Number added successfully");
         }
-
-
     }
 
     private boolean checkIfNumberIsNotPresent(int number, List<List<Space>> spaceList) {
@@ -70,79 +72,5 @@ public class Board {
             }
         }
         return true;
-    }
-
-    private List<Space> findSquareOfCoordinates(Integer intendedLine, Integer intendedColumn, List<List<Space>> possibleSquares) {
-        int index = Math.divideExact((intendedColumn - 1), 3);
-        List<Space> square = possibleSquares.get(index);
-        return square;
-    }
-
-    private List<Space> getAllNumbersInSpecifiedLine(Integer intendedLine, Integer intendedColumn, List<List<Space>> possibleSquares) {
-        List<Space> possibleNumbersInline = new ArrayList<>();
-        int indexLine = 2;
-
-        if (intendedLine % 3 != 0) {
-            indexLine = Math.abs((intendedLine % 3) - 1);
-        }
-        indexLine *= 3;
-
-        for (List<Space> possibleSquare : possibleSquares) {
-            List<Space> spaces = possibleSquare.subList(indexLine, indexLine + 3);
-            spaces.forEach(s -> possibleNumbersInline.add(s));
-        }
-        return possibleNumbersInline;
-    }
-
-    private List<List<Space>> getSquaresInLine(Integer intendedLine) {
-        List<List<Space>> possibleSquares = new ArrayList<>();
-        if (intendedLine >= 1 && intendedLine <= 3) {
-            possibleSquares.add(squares.get(0));
-            possibleSquares.add(squares.get(1));
-            possibleSquares.add(squares.get(2));
-        } else if (intendedLine >= 4 && intendedLine <= 6) {
-            possibleSquares.add(squares.get(3));
-            possibleSquares.add(squares.get(4));
-            possibleSquares.add(squares.get(5));
-        } else {
-            possibleSquares.add(squares.get(6));
-            possibleSquares.add(squares.get(7));
-            possibleSquares.add(squares.get(8));
-        }
-        return possibleSquares;
-    }
-
-    private List<List<Space>> getSquaresInColumn(Integer intendedColumn) {
-        List<List<Space>> possibleSquares = new ArrayList<>();
-        int i = Math.divideExact((intendedColumn - 1), 3);
-        switch (i) {
-            case 0:
-                possibleSquares.add(squares.get(0));
-                possibleSquares.add(squares.get(3));
-                possibleSquares.add(squares.get(6));
-                break;
-            case 1:
-                possibleSquares.add(squares.get(1));
-                possibleSquares.add(squares.get(4));
-                possibleSquares.add(squares.get(7));
-                break;
-            case 2:
-                possibleSquares.add(squares.get(2));
-                possibleSquares.add(squares.get(5));
-                possibleSquares.add(squares.get(8));
-                break;
-        }
-        return possibleSquares;
-    }
-
-    private List<Space> getAllNumbersInSpecifiedColumn(Integer intendedColumn, List<List<Space>> squaresInColumn) {
-        List<Space> allNumbersInColumn = new ArrayList<>();
-        int i = (intendedColumn - 1) % 3;
-        for (List<Space> square : squaresInColumn) {
-            for (int j = i; j <= i + 6; j = j + 3) {
-                allNumbersInColumn.add(square.get(j));
-            }
-        }
-        return allNumbersInColumn;
     }
 }
