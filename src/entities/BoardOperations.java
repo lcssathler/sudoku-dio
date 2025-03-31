@@ -15,6 +15,10 @@ public class BoardOperations {
     protected List<Space> allNumbersInSpecifiedColumn;
     protected Space spaceOfOcurrence;
 
+    public BoardOperations(Board board) {
+        this.board = board;
+    }
+
     protected void setSquaresInLine() {
         List<List<Space>> possiblesSquaresInLine = new ArrayList<>();
         if (line >= 1 && line <= 3) {
@@ -101,6 +105,7 @@ public class BoardOperations {
         setNumber(number);
         setLine(line);
         setColumn(column);
+        setupAttributes();
     }
 
     private void setupAttributes() {

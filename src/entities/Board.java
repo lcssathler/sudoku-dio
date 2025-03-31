@@ -6,11 +6,7 @@ import java.util.Optional;
 
 public class Board {
     private List<List<Space>> squares;
-    private BoardOperations boardOperations = new BoardOperations();
-
-    public Board() {
-        boardOperations.setBoard(this);
-    }
+    private BoardOperations boardOperations = new BoardOperations(this);
 
     public Board(List<List<Space>> lines) {
         this.squares = lines;

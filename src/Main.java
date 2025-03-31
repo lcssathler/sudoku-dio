@@ -25,10 +25,13 @@ public class Main {
             option = scanner.nextInt();
             switch (option) {
                 case 1:
-                    int numberToAdd;
                     System.out.print("Number to add: ");
-                    numberToAdd = scanner.nextInt();
-                    board.addNumber(numberToAdd, 3, 4);
+                    int numberToAdd = scanner.nextInt();
+                    System.out.print("Line: ");
+                    int line = scanner.nextInt();
+                    System.out.print("Column: ");
+                    int column = scanner.nextInt();
+                    board.addNumber(numberToAdd, line, column);
                     break;
                 case 3: board.displayBoard();
             }
