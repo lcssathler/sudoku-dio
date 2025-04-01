@@ -14,6 +14,7 @@ public class Main {
         int option;
         do {
             System.out.print("""
+                    -----------------------
                     Menu:
                         1- Add number
                         2- Remove number
@@ -44,6 +45,12 @@ public class Main {
 
                 case 3:
                     board.displayBoard();
+                    break;
+                case 4:
+                    board.statusGame();
+                    break;
+                case 5:
+                    board.finishGame();
             }
         } while (option != 6);
 
