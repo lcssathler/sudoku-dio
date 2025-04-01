@@ -1,6 +1,5 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,14 +37,9 @@ public class Board {
         }
     }
 
-    public void removeNumber(int number, Integer intendedLine, Integer intendedColumn) {
-
-    }
-
     public void addNumber(int number, Integer intendedLine, Integer intendedColumn) {
-        boardOperations.setData(number, intendedLine, intendedColumn);
-
-        if (boardOperations.getSpaceOfOcurrence().isFixed()) {
+        boardOperations.setData(intendedLine, intendedColumn);
+        if (boardOperations.spaceOfOcurrence.isFixed()) {
             System.out.println("You can't add a number in a fixed coordinate");
             return;
         } else {
@@ -56,6 +50,20 @@ public class Board {
             boardOperations.allNumbersInSpecifiedLine.get(intendedColumn - 1).setActual(number);
             System.out.println("Number added successfully");
         }
+    }
+
+    public void removeNumber(Integer intendedLine, Integer intendedColumn) {
+        boardOperations.setData(intendedLine, intendedColumn);
+        if (boardOperations.spaceOfOcurrence.isFixed()) {
+            System.out.println("You can't remove a number in a fixed coordinate");
+            return;
+        } else if (boardOperations.spaceOfOcurrence.getActual() == null) {
+            System.out.println("Cannot remove a number from a empty space");
+            return;
+        }
+
+        boardOperations.allNumbersInSpecifiedLine.get(intendedColumn - 1).setActual(null);
+        System.out.println("Number removed successfully");
     }
 
     private boolean checkIfNumberIsNotPresent(int number, List<List<Space>> spaceList) {

@@ -14,26 +14,36 @@ public class Main {
         int option;
         do {
             System.out.print("""
-                Menu:
-                    1- Add number
-                    2- Remove number
-                    3- Display board
-                    4- Status
-                    5- Finish game
-                    6- Exit game
-                Your choice:  """);
+                    Menu:
+                        1- Add number
+                        2- Remove number
+                        3- Display board
+                        4- Status
+                        5- Finish game
+                        6- Exit game
+                    Your choice:  """);
             option = scanner.nextInt();
             switch (option) {
                 case 1:
                     System.out.print("Number to add: ");
                     int numberToAdd = scanner.nextInt();
                     System.out.print("Line: ");
-                    int line = scanner.nextInt();
+                    int lineToAdd = scanner.nextInt();
                     System.out.print("Column: ");
-                    int column = scanner.nextInt();
-                    board.addNumber(numberToAdd, line, column);
+                    int columnToAdd = scanner.nextInt();
+                    board.addNumber(numberToAdd, lineToAdd, columnToAdd);
                     break;
-                case 3: board.displayBoard();
+
+                case 2:
+                    System.out.print("Line to remove: ");
+                    int lineToRemove = scanner.nextInt();
+                    System.out.print("Column to remove: ");
+                    int columnToRemove = scanner.nextInt();
+                    board.removeNumber(lineToRemove, columnToRemove);
+                    break;
+
+                case 3:
+                    board.displayBoard();
             }
         } while (option != 6);
 

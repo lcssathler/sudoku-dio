@@ -5,7 +5,6 @@ import java.util.List;
 
 public class BoardOperations {
     private Board board;
-    private int number;
     private Integer line;
     private Integer column;
     protected List<List<Space>> squaresInLine;
@@ -101,8 +100,7 @@ public class BoardOperations {
         this.board = board;
     }
 
-    public void setData(int number, int line, int column) {
-        setNumber(number);
+    public void setData(int line, int column) {
         setLine(line);
         setColumn(column);
         setupAttributes();
@@ -117,19 +115,11 @@ public class BoardOperations {
         setSpaceOfOcurrence();
     }
 
-    private void setNumber(int number) {
-        this.number = number;
-    }
-
     private void setLine(int line) {
         this.line = line;
     }
 
     private void setColumn(int column) {
         this.column = column;
-    }
-
-    public Space getSpaceOfOcurrence() {
-        return spaceOfOcurrence;
     }
 }
